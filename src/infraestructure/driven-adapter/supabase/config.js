@@ -8,7 +8,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
 
     const email = document.getElementById('correo').value;
     const password = document.getElementById('contraseña').value;
-
+    const messageElement = document.getElementById('message');
     // Inicia sesión con correo y contraseña
     const { error } = await supabase.auth.signInWithPassword({
         email: email,
