@@ -3,18 +3,27 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const correoInput = document.getElementById("correo")
-const contraseñaInput = document.getElementById("contraseña")
+document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-const { error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password,
+    const email = document.getElementById('correo').value;
+    const password = document.getElementById('contraseña').value;
+
+    // Inicia sesión con correo y contraseña
+    const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+    });
+
+    if (error) {
+        // Muestra un mensaje de error si falla la autenticación
+        messageElement.textContent = 'Error al iniciar sesión: ' + error.message;
+        messageElement.style.color = 'red';
+    } else {
+        // Muestra un mensaje de éxito y redirige o actualiza la interfaz
+        messageElement.textContent = '¡Inicio de sesión exitoso!';
+        messageElement.style.color = 'green';
+        // Puedes redirigir al usuario a otra página aquí
+        // window.location.href = 'dashboard.html'; 
+    }
 });
-
-if (error) {
-    messageElement.textContent = 'Error al iniciar sesión: ' + error.message;
-    messageElement.style.color = 'red';
-} else {
-    messageElement.textContent = '¡Inicio de sesión exitoso!';
-    messageElement.style.color = 'green';
-}
